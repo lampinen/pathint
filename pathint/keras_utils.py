@@ -52,7 +52,7 @@ def compute_fishers(model):
             # Clips output 
             # https://github.com/fchollet/keras/blob/master/keras/backend/tensorflow_backend.py#L2743
             output = out[:, idx]
-            epsilon = tf.convert_to_tensor(x)
+            epsilon = tf.convert_to_tensor(K.epsilon())
             if epsilon.dtype != output.dtype.base_dtype:
                 epsilon = tf.cast(epsilon, output.dtype.base_dtype)
 
@@ -107,4 +107,3 @@ def compute_fishers(model):
     update_fishers = tf.group(*[tf.assign_add(avg_f, f) for avg_f, f in zip(avg_fishers, fishers)])
     zero_fishers = tf.group(*[tf.assign(avg_f, 0.0 * avg_f) for avg_f in avg_fishers])
     return fishers, avg_fishers, update_fishers, zero_fishers
-

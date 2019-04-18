@@ -40,6 +40,9 @@ PATH_INT_PROTOCOL = lambda omega_decay, xi: (
         ('cweights',  lambda opt, w, prev_val: w.value()),
         ('grads2', lambda vars, w, prev_val: prev_val*0.0 ),
     ],
+    'task_metrics': {
+        'task_fisher': lambda opt: compute_fishers(opt.model),
+    },
     'regularizer_fn': quadratic_regularizer,
 })
 
@@ -55,6 +58,15 @@ FISHER_PROTOCOL = lambda omega_decay:(
         'task_fisher': lambda opt: compute_fishers(opt.model),
     },
     'regularizer_fn': quadratic_regularizer,
+})
+
+UNREGULARIZED_PROTOCOL = lambda: (
+    'unregularized',
+{
+    'task_metrics': {
+        'task_fisher': lambda opt: compute_fishers(opt.model),
+    },
+    'regularizer_fn': None,
 })
 
 def sum_regularizer_fn(weights, vars):

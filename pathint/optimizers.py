@@ -234,6 +234,15 @@ class KOOptimizer(Optimizer):
     def get_config(self):
         raise ValueError("Write the get_config bro")
 
+    def get_numvals_dict(self, key='omega'):
+        """ Returns dict of numerical values in original shapes"""
+        variables = self.vars[key]
+        numvals = {} 
+        for p in self.weights:
+            numval = K.get_value(variables[p])
+            numvals[p.name] = numval
+        return numvals
+
     def get_numvals_list(self, key='omega'):
         """ Returns list of numerical values such as for instance omegas in reproducible order """
         variables = self.vars[key]
