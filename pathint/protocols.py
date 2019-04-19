@@ -60,8 +60,8 @@ FISHER_PROTOCOL = lambda omega_decay:(
     'regularizer_fn': quadratic_regularizer,
 })
 
-UNREGULARIZED_PROTOCOL = lambda: (
-    'unregularized',
+UNREGULARIZED_PROTOCOL = lambda replay_prior: (
+    'unregularized[replay_prior=%s]' % str(replay_prior),
 {
     'task_metrics': {
         'task_fisher': lambda opt: compute_fishers(opt.model),
