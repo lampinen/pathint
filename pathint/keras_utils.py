@@ -24,7 +24,10 @@ class LossHistory(Callback):
 
     def on_batch_end(self, batch, logs={}):
         self.losses.append(logs.get('loss'))
-        self.regs.append(K.get_session().run(self.model.optimizer.regularizer))
+        if self.model.optimizer.regularizer != 0.:
+            self.regs.append(K.get_session().run(self.model.optimizer.regularizer))
+        else:
+            self.regs.append(0.)
 
 
 # Create a callback that tracks FisherInformation
